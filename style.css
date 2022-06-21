@@ -93,6 +93,7 @@ h1 {
     margin:0 ;
     max-width: 100%;
     row-gap: 40px;
+    margin-top:50px;
 
 }
 
@@ -1136,5 +1137,8 @@ margin-right:8px;
 @media screen and (min-width:680px) and (max-width:1360px){
     .container-2 .categories-row{
         grid-template-columns: 300px 300px;
+    }
+    .container .row{
+        margin-top:100px;
     }
 }
