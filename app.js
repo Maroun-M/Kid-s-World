@@ -8,7 +8,6 @@ const menuOverlay = document.querySelector(".menu-overlay");
 const menuContainer = document.querySelector(".menu-container");
 const hideBar = document.querySelector(".close-button");
 const showMenu = document.querySelector(".nav-bars");
-
 const cartBtn = document.querySelector(".nav-cart");
 const closeCartBtn = document.querySelector(".close-btn");
 const clearCartBtn = document.querySelector(".checkout-btn");
@@ -73,15 +72,12 @@ class UI{
                         <a href="#products1"><h4 class="title-product" ${product.category}> ${product.title} </h4></a> 
                         <h4 class="price"> $${product.price} </h4>   
                         <span class="bag-btn" data-id=${product.id}><i class="fa fa-cart-plus" data-id=${product.id}></i></span>
-                    </div>
-                
-        `;
+                    </div>`;
     });
     productsDOM.innerHTML = result;
     }      
     
    else if(store){
-    
     let allProducts = ``;
             products.forEach(product => {
                 allProducts += `<div class="product-1">
@@ -95,9 +91,8 @@ class UI{
             </div>`;
             productPageDOM.innerHTML = allProducts;
         });
-            
-        const searchInput = document.querySelector("[data-search]")
 
+        const searchInput = document.querySelector("[data-search]")
         searchInput.addEventListener("keyup", e => {
         const value = e.target.value.toLowerCase();
         let filtered = products.filter(product => product.title.toLowerCase().includes(value));
@@ -116,10 +111,52 @@ class UI{
             </div>`;
             productPageDOM.innerHTML = productResults;
             });
-    
         }
         });
-}
+
+        const filter = [...document.querySelectorAll(".category-title")];
+        console.log(filter)
+        buttonsDOM = filter;
+        filter.forEach(filter =>{
+            filter.addEventListener('click', event => {
+                let value = event.target.innerHTML.toLowerCase();
+                let filtered = products.filter(product => product.category.toLowerCase().includes(value));
+
+                if(value = 'all products'){
+                    let allProducts = ``;
+                    products.forEach(product => {
+                    allProducts += `<div class="product-1">
+                    <img src="${product.image}" alt="">
+                    <p class="product-title" ${product.category}>${product.title}</p>
+                    <p class="product-price">$${product.price}</p>
+                    <center>
+                    <i class="fa fa-cart-plus"  data-id=${product.id}></i> 
+                    <i class="fa-solid fa-magnifying-glass" data-id=${product.id}></i>
+                    </center>                
+                </div>`;
+                productPageDOM.innerHTML = allProducts;
+        });
+                }
+                if (filtered){
+                    let productResults = ``;
+                    filtered.forEach(product => {
+                    productResults += `<div class="product-1">
+                    <img src="${product.image}" alt="">
+                    <p class="product-title" ${product.category}>${product.title}</p>
+                    <p class="product-price">$${product.price}</p>
+                    <center>
+                    <i class="fa fa-cart-plus"  data-id=${product.id}></i> 
+                    <i class="fa-solid fa-magnifying-glass" data-id=${product.id}></i>
+                    </center>                
+                </div>`;
+                productPageDOM.innerHTML = productResults;
+                });
+                }
+            });
+        });
+        }  
+
+    
 }
     
     //add to cart button
@@ -127,7 +164,6 @@ class UI{
         const buttons =[...document.querySelectorAll(".fa-cart-plus")];
         buttonsDOM = buttons;
         buttons.forEach(button =>{
-            
             button.addEventListener('click', event => {
                 let id = button.dataset.id;
                 let inCart = cart.find(item => item.id === id);
