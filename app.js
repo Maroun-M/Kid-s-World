@@ -62,7 +62,7 @@ class UI{
             let result = '';
             products.forEach(product =>{
             result +=`  
-                        <div class="col-2">
+                        <div class="col-2" >
                         <a href=""><img src="${product.image}" ></a>
                         <i class="fa-regular fa-star"></i>
                         <i class="fa-regular fa-star"></i>
@@ -115,7 +115,6 @@ class UI{
         });
 
         const filter = [...document.querySelectorAll(".category-title")];
-        console.log(filter)
         buttonsDOM = filter;
         filter.forEach(filter =>{
             filter.addEventListener('click', event => {
@@ -154,9 +153,37 @@ class UI{
                 }
             });
         });
-        }  
-
-    
+          
+        const priceInput = document.querySelector('.price-filter');
+        const priceValue = document.querySelector('.price-value');
+        let maxPrice = products.map(product => product.price);
+        maxPrice = Math.max(...maxPrice);
+        maxPrice = Math.ceil(maxPrice);
+        priceInput.value = maxPrice;
+        priceInput.max = maxPrice;
+        priceInput.min = 0;
+        priceValue.textContent = `Value: $${maxPrice}`;
+        priceInput.addEventListener('input', event => {
+            const value = parseInt(priceInput.value);
+            priceValue.textContent = `Value : $${value}`;
+            let newStore = products.filter(product => product.price <= value);
+            if(newStore){
+                let productResults = ``;
+                    newStore.forEach(product => {
+                    productResults += `<div class="product-1">
+                    <img src="${product.image}" alt="">
+                    <p class="product-title" ${product.category}>${product.title}</p>
+                    <p class="product-price">$${product.price}</p>
+                    <center>
+                    <i class="fa fa-cart-plus"  data-id=${product.id}></i> 
+                    <i class="fa-solid fa-magnifying-glass" data-id=${product.id}></i>
+                    </center>                
+                </div>`;
+                productPageDOM.innerHTML = productResults;
+                });
+            }
+        });
+    }
 }
     
     //add to cart button
