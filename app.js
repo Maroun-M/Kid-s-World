@@ -23,10 +23,10 @@ const Count = document.querySelector(".count");
 const productPageDOM = document.querySelector(".product-columns");
 const home = document.getElementById('home');
 const store = document.getElementById('store');
+const productsContainer = document.querySelector(".product-1");
 let cart = [];
 let buttonsDOM = [];
-
-
+let products = []
 // getting all the products
 class Products {
     async getProducts() {
@@ -37,15 +37,18 @@ class Products {
             let products = contentful.items;
             products = products.map(item =>{
                 
-            const { title, price } = item.fields;
+            const { title, price} = item.fields;
             const { id } = item.sys;
-            const image = item.fields.image.fields.file .url;
-            const categoryBrands = item.fields;
-            return { title, price , id, image, categoryBrands };
+            const image = item.fields.image.fields.file.url;
+            const { category } = item.fields;
+            const productContainer = productsContainer ;
+            return {category, title, price , id, image, element: productContainer};
             
             })
             return products
         }
+        
+    
          catch (error) {
             console.log(error);
         }
@@ -55,10 +58,10 @@ class Products {
 //display products
 class UI{
     displayProducts(products){
-        
-       if(home){
-        let result = '';
-        products.forEach(product =>{
+        console.log(products)
+        if(home){
+            let result = '';
+            products.forEach(product =>{
             result +=`  
                         <div class="col-2">
                         <a href=""><img src="${product.image}" ></a>
@@ -67,7 +70,7 @@ class UI{
                         <i class="fa-regular fa-star"></i>
                         <i class="fa-regular fa-star"></i>
                         <i class="fa-regular fa-star"></i>
-                        <a href="#products1"><h4 class="title-product" ${product.categoryBrands}> ${product.title} </h4></a> 
+                        <a href="#products1"><h4 class="title-product" ${product.category}> ${product.title} </h4></a> 
                         <h4 class="price"> $${product.price} </h4>   
                         <span class="bag-btn" data-id=${product.id}><i class="fa fa-cart-plus" data-id=${product.id}></i></span>
                     </div>
@@ -76,24 +79,49 @@ class UI{
     });
     productsDOM.innerHTML = result;
     }      
+    
    else if(store){
-    let productResults = '';
-    products.forEach(product => {
-        
-        productResults += `<div class="product-1">
-        <img src="${product.image}" alt="">
-        <p class="product-title" ${product.categoryBrands}>${product.title}</p>
-        <p class="product-price">$${product.price}</p>
-        <center>
-        <i class="fa fa-cart-plus"  data-id=${product.id}></i> 
-        <i class="fa-solid fa-magnifying-glass" data-id=${product.id}></i>
-        </center>                
-    </div>`;
-    });
-    productPageDOM.innerHTML = productResults;
-}
+    
+    let allProducts = ``;
+            products.forEach(product => {
+                allProducts += `<div class="product-1">
+                <img src="${product.image}" alt="">
+                <p class="product-title" ${product.category}>${product.title}</p>
+                <p class="product-price">$${product.price}</p>
+                <center>
+                <i class="fa fa-cart-plus"  data-id=${product.id}></i> 
+                <i class="fa-solid fa-magnifying-glass" data-id=${product.id}></i>
+                </center>                
+            </div>`;
+            productPageDOM.innerHTML = allProducts;
+        });
+            
+        const searchInput = document.querySelector("[data-search]")
 
+        searchInput.addEventListener("keyup", e => {
+        const value = e.target.value.toLowerCase();
+        let filtered = products.filter(product => product.title.toLowerCase().includes(value));
+        console.log(filtered)
+        if (filtered) {
+            let productResults = ``;
+            filtered.forEach(product => {
+                productResults += `<div class="product-1">
+                <img src="${product.image}" alt="">
+                <p class="product-title" ${product.category}>${product.title}</p>
+                <p class="product-price">$${product.price}</p>
+                <center>
+                <i class="fa fa-cart-plus"  data-id=${product.id}></i> 
+                <i class="fa-solid fa-magnifying-glass" data-id=${product.id}></i>
+                </center>                
+            </div>`;
+            productPageDOM.innerHTML = productResults;
+            });
+    
+        }
+        });
 }
+}
+    
     //add to cart button
     getBagButtons(){
         const buttons =[...document.querySelectorAll(".fa-cart-plus")];
@@ -182,12 +210,10 @@ class UI{
         menuContainer.classList.add("hideNav");
         menuOverlay.classList.add("hideNavigation");
 }
-
     hideMenu(){
         menuContainer.classList.remove("hideNav");
         menuOverlay.classList.remove("hideNavigation");
     }
-
    //adding item to cart and cartDOM
    populateCart(cart){
     cart.forEach(item => this.addCartItem(item));
@@ -198,7 +224,6 @@ class UI{
     cartOverlay.classList.remove("transparentBg");
     cartDOM.classList.remove("showCart");
     }
-    
    cartLogic(){
     //clear cart
     clearCartBtn.addEventListener("click", () => {
@@ -242,9 +267,6 @@ class UI{
     });
 
     }
-
-
-
     clearCart() {
      let cartItems = cart.map(item => item.id);
      cartItems.forEach(id => this.removeItem(id));
@@ -261,7 +283,9 @@ class UI{
    }
    
    
-   
+    
+        
+  
 }
 
 //local storage
@@ -287,6 +311,9 @@ class Storage{
 }   
 
 
+    
+
+
 document.addEventListener("DOMContentLoaded", () => {
     const ui = new UI();
     const products = new Products();
@@ -302,3 +329,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
+   

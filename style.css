@@ -25,6 +25,9 @@ font-weight: 400;
     
     
 }
+.nav-cart:active {
+    border-style:outset;
+}
 .amount{  
     color:#FCF2D8;
     align-items: center;    
@@ -931,7 +934,7 @@ h1 {
 
 .product-columns {
     display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  
+    grid-template-columns: repeat(auto-fit, minmax(250px, 30%));  
     max-width:100%;
     gap:30px;
     column-gap: 30px;
@@ -1140,5 +1143,9 @@ margin-right:8px;
     }
     .container .row{
         margin-top:100px;
+    }
+
+    .product-page .product-columns{
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     }
 }
