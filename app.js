@@ -64,13 +64,8 @@ class UI{
             products.forEach(product =>{
             result +=`  
                         <div class="col-2" >
-                        <a href="product.html?id=${product.id}"><img src="${product.image}" class="product-images" data-id=${product.id}></a>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <a href="#products1"><h4 class="title-product" ${product.category}> ${product.title} </h4></a> 
+                        <a href="product.html?id=${product.id}"><img src="${product.image}" class="product-images" data-id=${product.id}>
+                        <h4 class="title-product" ${product.category}> ${product.title} </h4></a> 
                         <h4 class="price"> $${product.price} </h4>   
                         <span class="bag-btn" data-id=${product.id}><i class="fa fa-cart-plus" data-id=${product.id}></i></span>
                     </div>`;
@@ -82,8 +77,8 @@ class UI{
     let allProducts = ``;
             products.forEach(product => {
                 allProducts += `<div class="product-1">
-                <img src="${product.image}" alt="">
-                <p class="product-title" ${product.category}>${product.title}</p>
+                <a href="product.html?id=${product.id}"><img src="${product.image}" alt="" class="product-images" data-id=${product.id}>
+                <p class="product-title" ${product.category}>${product.title}</p></a>
                 <p class="product-price">$${product.price}</p>
                 <center>
                 <i class="fa fa-cart-plus"  data-id=${product.id}></i> 
@@ -102,8 +97,8 @@ class UI{
             let productResults = ``;
             filtered.forEach(product => {
                 productResults += `<div class="product-1">
-                <img src="${product.image}" alt="">
-                <p class="product-title" ${product.category}>${product.title}</p>
+                <a href="product.html?id=${product.id}"><img src="${product.image}" alt="" class="product-images" data-id=${product.id}>
+                <p class="product-title" ${product.category}>${product.title}</p></a>
                 <p class="product-price">$${product.price}</p>
                 <center>
                 <i class="fa fa-cart-plus"  data-id=${product.id}></i> 
@@ -126,8 +121,8 @@ class UI{
                     let allProducts = ``;
                     products.forEach(product => {
                     allProducts += `<div class="product-1">
-                    <img src="${product.image}" alt="">
-                    <p class="product-title" ${product.category}>${product.title}</p>
+                    <a href="product.html?id=${product.id}"><img src="${product.image}" alt="" class="product-images" data-id=${product.id}>
+                    <p class="product-title" ${product.category}>${product.title}</p></a>
                     <p class="product-price">$${product.price}</p>
                     <center>
                     <i class="fa fa-cart-plus"  data-id=${product.id}></i> 
@@ -141,8 +136,8 @@ class UI{
                     let productResults = ``;
                     filtered.forEach(product => {
                     productResults += `<div class="product-1">
-                    <img src="${product.image}" alt="">
-                    <p class="product-title" ${product.category}>${product.title}</p>
+                    <a href="product.html?id=${product.id}"><img src="${product.image}" alt="" class="product-images" data-id=${product.id}>
+                    <p class="product-title" ${product.category}>${product.title}</p></a>
                     <p class="product-price">$${product.price}</p>
                     <center>
                     <i class="fa fa-cart-plus"  data-id=${product.id}></i> 
@@ -172,8 +167,8 @@ class UI{
                 let productResults = ``;
                     newStore.forEach(product => {
                     productResults += `<div class="product-1">
-                    <img src="${product.image}" alt="">
-                    <p class="product-title" ${product.category}>${product.title}</p>
+                    <a href="product.html?id=${product.id}"><img src="${product.image}" alt="" class="product-images" data-id=${product.id}>
+                    <p class="product-title" ${product.category}>${product.title}</p></a>
                     <p class="product-price">$${product.price}</p>
                     <center>
                     <i class="fa fa-cart-plus"  data-id=${product.id}></i> 
