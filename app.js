@@ -212,7 +212,9 @@ displaySingleProduct(){
                         </button>
                     </div>
                 </div>`;
+                const title = product.title.toUpperCase();
                 singleProductDOM.innerHTML = singleProductResult;
+                document.title = title;
                 });
             
 }
