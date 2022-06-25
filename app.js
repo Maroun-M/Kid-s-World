@@ -192,11 +192,11 @@ class UI{
 }
 
 displaySingleProduct(){
+    try{
     const singleProduct = document.getElementById(".single-product-body");
     const singleProductDOM = document.querySelector(".single-product")
     const product1 = JSON.parse(localStorage.getItem("id"));
-        console.log(product1)  
-                
+    console.log(product1)
                 let singleProductResult = ``;
                 product1.forEach(product => {
                     singleProductResult += `<div class="product1">
@@ -212,11 +212,12 @@ displaySingleProduct(){
                         </button>
                     </div>
                 </div>`;
-                const title = product.title.toUpperCase();
                 singleProductDOM.innerHTML = singleProductResult;
-                document.title = title;
                 });
-            
+    }
+    catch(error){
+
+    }
 }
 
 
