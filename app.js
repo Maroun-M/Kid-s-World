@@ -45,6 +45,7 @@ class Products {
             
             })
             return products
+            
         }
         
     
@@ -63,7 +64,7 @@ class UI{
             products.forEach(product =>{
             result +=`  
                         <div class="col-2" >
-                        <a href=""><img src="${product.image}" ></a>
+                        <a href="product.html?id=${product.id}"><img src="${product.image}" class="product-images" data-id=${product.id}></a>
                         <i class="fa-regular fa-star"></i>
                         <i class="fa-regular fa-star"></i>
                         <i class="fa-regular fa-star"></i>
@@ -86,7 +87,7 @@ class UI{
                 <p class="product-price">$${product.price}</p>
                 <center>
                 <i class="fa fa-cart-plus"  data-id=${product.id}></i> 
-                <i class="fa-solid fa-magnifying-glass" data-id=${product.id}></i>
+                <a href="product.html?id=${product.id}"><i class="fa-solid fa-magnifying-glass" data-id=${product.id}></i></a>
                 </center>                
             </div>`;
             productPageDOM.innerHTML = allProducts;
@@ -106,7 +107,7 @@ class UI{
                 <p class="product-price">$${product.price}</p>
                 <center>
                 <i class="fa fa-cart-plus"  data-id=${product.id}></i> 
-                <i class="fa-solid fa-magnifying-glass" data-id=${product.id}></i>
+                <a href="product.html?id=${product.id}"><i class="fa-solid fa-magnifying-glass" data-id=${product.id}></i></a>
                 </center>                
             </div>`;
             productPageDOM.innerHTML = productResults;
@@ -130,7 +131,7 @@ class UI{
                     <p class="product-price">$${product.price}</p>
                     <center>
                     <i class="fa fa-cart-plus"  data-id=${product.id}></i> 
-                    <i class="fa-solid fa-magnifying-glass" data-id=${product.id}></i>
+                    <a href="product.html?id=${product.id}"><i class="fa-solid fa-magnifying-glass" data-id=${product.id}></i></a>
                     </center>                
                 </div>`;
                 productPageDOM.innerHTML = allProducts;
@@ -145,7 +146,7 @@ class UI{
                     <p class="product-price">$${product.price}</p>
                     <center>
                     <i class="fa fa-cart-plus"  data-id=${product.id}></i> 
-                    <i class="fa-solid fa-magnifying-glass" data-id=${product.id}></i>
+                    <a href="product.html?id=${product.id}"><i class="fa-solid fa-magnifying-glass" data-id=${product.id}></i></a>
                     </center>                
                 </div>`;
                 productPageDOM.innerHTML = productResults;
@@ -176,7 +177,7 @@ class UI{
                     <p class="product-price">$${product.price}</p>
                     <center>
                     <i class="fa fa-cart-plus"  data-id=${product.id}></i> 
-                    <i class="fa-solid fa-magnifying-glass" data-id=${product.id}></i>
+                    <a href="product.html?id=${product.id}"><i class="fa-solid fa-magnifying-glass" data-id=${product.id}></i></a>
                     </center>                
                 </div>`;
                 productPageDOM.innerHTML = productResults;
@@ -184,11 +185,47 @@ class UI{
             }
         });
     }
-}
+    const buttons = document.querySelectorAll(".fa-magnifying-glass, .product-images");
+    buttons.forEach(button => {
+        button.addEventListener('click', event =>{
+            const buttonID = button.dataset.id;
+            const id = products.filter(product => product.id.includes(buttonID));
+            localStorage.setItem('id', JSON.stringify(id)); 
+        });
+    });
     
+}
+
+displaySingleProduct(){
+    const singleProduct = document.getElementById(".single-product-body");
+    const singleProductDOM = document.querySelector(".single-product")
+    const product1 = JSON.parse(localStorage.getItem("id"));
+        console.log(product1)  
+                
+                let singleProductResult = ``;
+                product1.forEach(product => {
+                    singleProductResult += `<div class="product1">
+                    <div class="single-product-image">
+                        <img src="${product.image}" alt="">
+                    </div>
+                    <div class="single-product-details">
+                        <p class="single-product-title">${product.title}</p>
+                        <p class="single-product-price">$${product.price}</p>
+                        <p class="single-product-description">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse impedit, voluptates dolor quae accusantium nisi molestiae vel ipsa a, neque veniam fugiat repellendus? Delectus suscipit nostrum explicabo, maiores veritatis voluptatibus?</p>
+                        <button class="add-button" data-id=${product.id}>
+                            Add To Cart
+                        </button>
+                    </div>
+                </div>`;
+                singleProductDOM.innerHTML = singleProductResult;
+                });
+            
+}
+
+
     //add to cart button
     getBagButtons(){
-        const buttons =[...document.querySelectorAll(".fa-cart-plus")];
+        const buttons =[...document.querySelectorAll(".fa-cart-plus, .add-button")];
         buttonsDOM = buttons;
         buttons.forEach(button =>{
             button.addEventListener('click', event => {
@@ -357,6 +394,7 @@ class Storage{
         localStorage.setItem("products", JSON.stringify(products)
         );
   }
+    
     static getProducts(id){
         let products = JSON.parse(localStorage.getItem('products'));
         return products.find(product => product.id === id)
@@ -370,7 +408,6 @@ class Storage{
         return localStorage.getItem('cart')?JSON.parse
         (localStorage.getItem('cart')):[]
     }
-
 }   
 
 
@@ -384,8 +421,9 @@ document.addEventListener("DOMContentLoaded", () => {
     ui.setupAPP();  
     // get all products
     products.getProducts().then(products => {
-    ui.displayProducts(products);
-    Storage.saveProducts(products);
+        ui.displayProducts(products);
+        ui.displaySingleProduct();
+        Storage.saveProducts(products);
   }).then(() => {
       ui.cartLogic();
       ui.getBagButtons();

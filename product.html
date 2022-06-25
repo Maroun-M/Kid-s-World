@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- fonts -->
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Karla:wght@200;300;400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Karla:wght@200;300;400&family=Roboto:wght@400;500;700&display=swap');
+</style>
+<!-- script -->
+    <script src="https://kit.fontawesome.com/d70200cf1d.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
+ 
+    <link rel="stylesheet" href="./style.css">
+    
+<!-- title and favicon -->
+    <title>Kids' World</title>
+    <link rel="shortcut icon" type="image/jpg" href="./logos and images/favicon.png">
+
+    </head>
+<!-- START OF BODY -->
+<body id="single-product-body">
+
+<div class="head">
+    <div class="container">
+        
+    <!-- navigation bar -->
+
+<div class="navbar">
+
+    <div class="logo">
+        <a href="index.html"><img src="./logos and images/logo_transparent.png" width="125px"></a>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="index.html"> Home </a></li>
+            <li><a href="products.html"> Products </a></li>
+            <li><a href="#"> About </a></li>
+            <li><a href="#"> Contact </a></li>
+            <li><a href="#"> Account </a></li>
+        </ul>
+        
+        <span class="nav-cart "><span class="amount">0</span><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        
+        </span>
+        <span class="nav-bars">
+            <i class="fa-solid fa-bars"></i></span> 
+           </nav>
+</div>
+<hr color="#a344a7" >
+    <!-- end of navbar -->
+
+    </div>
+    
+</div>
+<!-- end of head -->
+
+<!-- single-product start -->
+<div class="single-product-overlay">
+    <div class="single-product">
+        <!-- <div class="product1">
+            <div class="single-product-image">
+                <img src="./logos and images/Giant_white.jpg" alt="">
+            </div>
+            <div class="single-product-details">
+                <p class="single-product-title">Giant Bicycle</p>
+                <p class="single-product-price">$999.99</p>
+                <p class="single-product-description">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse impedit, voluptates dolor quae accusantium nisi molestiae vel ipsa a, neque veniam fugiat repellendus? Delectus suscipit nostrum explicabo, maiores veritatis voluptatibus?</p>
+                <button class="add-button">
+                    Add To Cart
+                </button>
+            </div>
+        </div> -->
+    </div>
+</div>
+<!-- single-product end -->
+
+
+
+<!-- Cart -->
+<div class="cart-overlay">
+    <div class="cart">
+        <span class="close-btn">
+            <i class="fa-solid fa-xmark fa-2xl"></i>
+        </span>
+        
+        <h2>Your Bag</h2>
+        <div class="cart-content">
+            <!-- this is the div of the dynamic cart content -->
+        </div>
+        <div class="footer">
+            <h4 >Your Total: $<span class="cart-total">19.99$</span></h4>
+            <button class="checkout-btn"><p>Checkout</p></button>
+        </div>
+    </div>
+</div>
+<!-- end of cart -->
+
+<!-- Hamburger overlay start -->
+<div class="menu-overlay">
+        <div class="menu-container">
+        <div class="close-button">
+            <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <div class="menu-content">
+            <div class="home">
+                <i class="fa-solid fa-house"></i>
+               <a href="./index.html"> <p>Home</p></a>
+            </div>
+            <div class="products-section">
+                <i class="fa-solid fa-shop"></i>
+                <a href="./products.html"><p>Products</p></a>
+            </div>
+            <div class="about">
+                <i class="fa-solid fa-info"></i>
+                <a href=""><p>About</p></a>
+            </div>
+            <div class="contact">
+                <div class="contact">
+                    <i class="fa-solid fa-address-book"></i>
+                    <a href=""><p>Contact</p></a>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Hamburger overlay end -->
+<script src="app.js"></script>
+
+
+</body>
+</html>
