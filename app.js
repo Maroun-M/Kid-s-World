@@ -40,8 +40,7 @@ class Products {
             const { id } = item.sys;
             const image = item.fields.image.fields.file.url;
             const { category } = item.fields;
-            const productContainer = productsContainer ;
-            return {category, title, price , id, image, element: productContainer};
+            return {category, title, price , id, image};
             
             })
             return products
@@ -55,10 +54,9 @@ class Products {
     }
 }
 
-//display products
 class UI{
+    //display products of the home page
     displayProducts(products){
-        console.log(products)
         if(home){
             let result = '';
             products.forEach(product =>{
@@ -72,7 +70,7 @@ class UI{
     });
     productsDOM.innerHTML = result;
     }      
-    
+    // display the products in the products page
    else if(store){
     let allProducts = ``;
             products.forEach(product => {
@@ -88,11 +86,11 @@ class UI{
             productPageDOM.innerHTML = allProducts;
         });
 
+        // filter the products based on the user search
         const searchInput = document.querySelector("[data-search]")
         searchInput.addEventListener("keyup", e => {
         const value = e.target.value.toLowerCase();
         let filtered = products.filter(product => product.title.toLowerCase().includes(value));
-        console.log(filtered)
         if (filtered) {
             let productResults = ``;
             filtered.forEach(product => {
@@ -109,14 +107,14 @@ class UI{
             });
         }
         });
-
+        // filter the products based on the user category choice
         const filter = [...document.querySelectorAll(".category-title")];
         buttonsDOM = filter;
         filter.forEach(filter =>{
             filter.addEventListener('click', event => {
                 let value = event.target.innerHTML.toLowerCase();
                 let filtered = products.filter(product => product.category.toLowerCase().includes(value));
-
+                // all products choice
                 if(value = 'all products'){
                     let allProducts = ``;
                     products.forEach(product => {
@@ -131,7 +129,7 @@ class UI{
                 </div>`;
                 productPageDOM.innerHTML = allProducts;
         });
-                }
+                } // remaining choices of the category filter
                 if (filtered){
                     let productResults = ``;
                     filtered.forEach(product => {
@@ -149,7 +147,7 @@ class UI{
                 }
             });
         });
-          
+        // price filter
         const priceInput = document.querySelector('.price-filter');
         const priceValue = document.querySelector('.price-value');
         let maxPrice = products.map(product => product.price);
@@ -180,6 +178,7 @@ class UI{
             }
         });
     }
+    // on-click the button filters the array and returns a single product array which is then stored in the browser local storage and the single product array is now called "id"
     const buttons = document.querySelectorAll(".fa-magnifying-glass, .product-images");
     buttons.forEach(button => {
         button.addEventListener('click', event =>{
@@ -190,11 +189,13 @@ class UI{
     });
     
 }
-
+// displaying the product clicked on the single page
+// using try catch to stop the application from breaking in case you aren't on the single product html page
 displaySingleProduct(){
     try{
     const singleProduct = document.getElementById(".single-product-body");
     const singleProductDOM = document.querySelector(".single-product")
+    // retrieving the single product array
     const product1 = JSON.parse(localStorage.getItem("id"));
     console.log(product1)
                 let singleProductResult = ``;
@@ -220,8 +221,8 @@ displaySingleProduct(){
     }
 }
 
-
-    //add to cart button
+    
+    // selecting all the add to cart buttong and writing their functionality script
     getBagButtons(){
         const buttons =[...document.querySelectorAll(".fa-cart-plus, .add-button")];
         buttonsDOM = buttons;
@@ -229,7 +230,8 @@ displaySingleProduct(){
             button.addEventListener('click', event => {
                 let id = button.dataset.id;
                 let inCart = cart.find(item => item.id === id);
-                if(inCart){                   
+                if(inCart){        
+                    // adding additional item to an existing item in the cart           
                     let addAmount = event.target;
                     let id = addAmount.dataset.id;
                     let tempItem = cart.find(item => item.id === id);
@@ -248,16 +250,12 @@ displaySingleProduct(){
                 this.setCartValues(cart);
                 //displaying the item in the cart
                 this.addCartItem(cartItem);
-                //show cart
-                
-
-            
                 }
             });
         
          });         
     }
-
+      // setting the cart map and the adding the values of total price and total amount  
       setCartValues(cart){
         let tempTotal = 0;
         let itemsTotal = 0;
@@ -268,7 +266,9 @@ displaySingleProduct(){
         cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
         cartItems.innerText = itemsTotal;
     }
+    // adding an item to the cart
     addCartItem(item){
+        // adding the elements to hold the items in the cart
         const div = document.createElement('div');
         div.classList.add('cart-rows');
         div.innerHTML=`<div class="cart-col-1">
@@ -286,6 +286,7 @@ displaySingleProduct(){
         <i class="fa-solid fa-chevron-down" data-id=${item.id}></i>
     </div>
         `
+    // displaying the items in the created division
     cartContent.appendChild(div);
     }
     //show cart btn
@@ -304,30 +305,22 @@ displaySingleProduct(){
     hideBar.addEventListener('click', this.hideMenu);
         
    }
-    showMenu(){
-        menuContainer.classList.add("hideNav");
-        menuOverlay.classList.add("hideNavigation");
-}
-    hideMenu(){
-        menuContainer.classList.remove("hideNav");
-        menuOverlay.classList.remove("hideNavigation");
-    }
    //adding item to cart and cartDOM
    populateCart(cart){
-    cart.forEach(item => this.addCartItem(item));
-     
+       cart.forEach(item => this.addCartItem(item));
+       
     }
     // close btn
-   hideCart(){
-    cartOverlay.classList.remove("transparentBg");
-    cartDOM.classList.remove("showCart");
+    hideCart(){
+        cartOverlay.classList.remove("transparentBg");
+        cartDOM.classList.remove("showCart");
     }
-   cartLogic(){
-    //clear cart
-    clearCartBtn.addEventListener("click", () => {
-        this.clearCart();
-    });
-    cartContent.addEventListener("click", event => {
+    cartLogic(){
+        //clear cart
+        clearCartBtn.addEventListener("click", () => {
+            this.clearCart();
+        });
+        cartContent.addEventListener("click", event => {
         //remove single product from cart and cartDOM
         if(event.target.classList.contains('remove-btn'))
         {
@@ -363,27 +356,35 @@ displaySingleProduct(){
             }
         }
     });
-
-    }
-    clearCart() {
-     let cartItems = cart.map(item => item.id);
-     cartItems.forEach(id => this.removeItem(id));
-     
-     while(cartContent.children.length>0){
+    
+}
+// clear cart function
+clearCart() {
+    let cartItems = cart.map(item => item.id);
+    cartItems.forEach(id => this.removeItem(id));
+    
+    while(cartContent.children.length>0){
         cartContent.removeChild(cartContent.children[0]);
-     }
-   }
-   removeItem(id){
+    }
+}
+// remove item function
+removeItem(id){
     cart = cart.filter(item => item.id !== id);
     this.setCartValues(cart);
     Storage.saveCart(cart);
-   
-   }
-   
-   
     
-        
-  
+}
+
+// open menu for mobile
+showMenu(){
+    menuContainer.classList.add("hideNav");
+    menuOverlay.classList.add("hideNavigation");
+}
+// hide menu for mobile
+hideMenu(){
+    menuContainer.classList.remove("hideNav");
+    menuOverlay.classList.remove("hideNavigation");
+}
 }
 
 //local storage
